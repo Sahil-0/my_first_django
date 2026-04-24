@@ -1,0 +1,26 @@
+{% extends "gamereview/base.html" %}
+
+{% block subtitle %}This is the Review for {{ game.title }}{% endblock %}
+
+{% block content %}
+
+    <p><strong>Developer:</strong> {{ game.developer }}</p>
+    <p><strong>Platform:</strong> {{ game.platform }}</p>
+
+    <p><strong>Tags:</strong></p>
+    <ul>
+        {% for tag in game.label_tag.all %}
+            <li>{{ tag.label }}</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <h3>Reviews:</h3>
+    <ul>
+        {% for review_item in game.review_set.all %}
+            <li>{{ review_item.review }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

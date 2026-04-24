@@ -1,0 +1,9 @@
+{% extends "gamereview/base.html" %}
+
+{% block subtitle %}Game List{% endblock %}
+
+{% block content %}
+{% for game in all_games %}
+    <li><a href="{% url 'gameReviewapp:review' game.slug %}">{{ game.title }}</a> </li>
+{% endfor %}
+{% endblock %}

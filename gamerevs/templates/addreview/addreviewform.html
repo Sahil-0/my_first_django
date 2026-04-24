@@ -1,0 +1,20 @@
+{% extends "gamereview/base.html" %}
+
+{% block subtitle %}Add Review{% endblock %}
+
+{% block content %}
+    <h2>Add Review</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <h3>Existing Reviews</h3>
+    <ul>
+        {% for review in reviews %}
+            <li>{{ review.review_text }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

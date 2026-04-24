@@ -1,0 +1,14 @@
+<h2>Add Review</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add</button>
+</form>
+
+<h3>All Reviews</h3>
+<ul>
+{% for review in reviews %}
+    <li>{{ review.review_text }}</li>
+{% endfor %}
+</ul>

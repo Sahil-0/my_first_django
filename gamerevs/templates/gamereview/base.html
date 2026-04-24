@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>My Game Review Site</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <!-- Header -->
+    <h1 class="text-center bg-dark text-white p-3 rounded">
+        {% block title %}My Game Review Site{% endblock %}
+    </h1>
+
+    <!-- Banner -->
+    <div class="my-3 text-center">
+        <img src="{% static 'images/banner2.png' %}" class="img-fluid rounded" alt="Banner">
+    </div>
+
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <h5>Navigation</h5>
+            {% block sidebar %}
+            <div class="list-group">
+                <a href="{% url 'gamereview:gamelist' %}" class="list-group-item list-group-item-action">Game List</a>
+                <a href="{% url 'addgame:addgame' %}" class="list-group-item list-group-item-action">Add Game</a>
+                <a href="{% url 'addreview:addreview' %}" class="list-group-item list-group-item-action">Add Review</a>
+            </div>
+            {% endblock %}
+        </div>
+
+        <!-- Content -->
+        <div class="col-md-9">
+            <h3 class="mb-3">{% block subtitle %}{% endblock %}</h3>
+            {% block content %}{% endblock %}
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-4 p-3 bg-light border rounded">
+        <p class="mb-0">© 2026 Game Review Site</p>
+    </div>
+
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

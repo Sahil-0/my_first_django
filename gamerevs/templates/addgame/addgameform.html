@@ -1,0 +1,21 @@
+{% extends "gamereview/base.html" %}
+
+{% block subtitle %}Add New Game{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Add New Game</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+        <h2>Existing Game</h2>
+        <ul>
+            {% for game in games %}
+            <li><p>{{ game.title }} - {{ game.developer }} - {{ game.platform }} </p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

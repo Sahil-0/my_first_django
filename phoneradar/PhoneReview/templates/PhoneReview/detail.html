@@ -1,0 +1,18 @@
+<h1>{{ model.model_name }}</h1>
+
+<p><strong>Platform:</strong> {{ model.platform }}</p>
+<p><strong>Launch Date:</strong> {{ model.launch_date }}</p>
+
+<h2>Reviews</h2>
+<ul>
+{% for review in reviews %}
+    <li>{{ review.review_text }}</li>
+{% endfor %}
+</ul>
+
+<h2>News Links</h2>
+<ul>
+{% for link in model.newslink_set.all %}
+    <li><a href="{{ link.url }}">{{ link.url }}</a></li>
+{% endfor %}
+</ul>
