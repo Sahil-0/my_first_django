@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+{% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}!</p>
+{% endif %}
+<p>You visited this page {{ visits }} times.</p>
 <h1>Phone Brands</h1>
 
 <ul>

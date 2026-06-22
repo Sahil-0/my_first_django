@@ -1,11 +1,22 @@
-from django.shortcuts import render, get_object_or_404
-from .forms import PhoneModelForm, ReviewForm
+from django.shortcuts import render, get_object_or_404,redirect
+from .forms import PhoneModelForm, ReviewForm, UserForm
 from .models import Brand, PhoneModel, Review
+from django.contrib.auth import authenticate, login, mixins
+from django.contrib.auth.decorators import login_required
+from django.views import generic
 
 #Brand List (index page)
 def index(request):
     brands = Brand.objects.all()
-    return render(request, 'PhoneReview/index.html', {'brands': brands})
+
+    visits = request.session.get('visits', 0)
+    visits += 1
+    request.session['visits'] = visits
+
+    return render(request, 'PhoneReview/index.html', {
+        'brands': brands,
+        'visits': visits
+    })
 
 #Models by Brand
 def brand_models(request, brand_id):
@@ -26,7 +37,7 @@ def model_detail(request, model_id):
         'reviews': reviews
     })
 
-
+@login_required(login_url='/register/')
 def add_phone(request):
     if request.method == 'POST':
         form = PhoneModelForm(request.POST)
@@ -42,6 +53,7 @@ def add_phone(request):
         'phones': phones
     })
 
+@login_required(login_url='/register/')
 def add_review(request):
     if request.method == 'POST':
         form = ReviewForm(request.POST)
@@ -56,3 +68,29 @@ def add_review(request):
         'form': form,
         'reviews': reviews
     })
+
+class AddUserFormView(generic.TemplateView):
+    template_name = 'PhoneReview/registrationform.html'
+
+    def get(self, request):
+        form = UserForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = UserForm(request.POST)
+
+        if form.is_valid():
+            user = form.save(commit=False)
+            password = form.cleaned_data['password']
+            username = form.cleaned_data['username']
+
+            user.set_password(password)
+            user.save()
+
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+
+        return render(request, self.template_name, {'form': form})

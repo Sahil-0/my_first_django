@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gamelist</title>
+</head>
+<body>
+<h1>This is Game List Page</h1>
+<form action="{% url 'calculate:add' %}" method="POST">
+{% csrf_token %}
+{{form.as_p}}
+<button type="submit">Submit</button>
+</form>
+</body>
+</html>

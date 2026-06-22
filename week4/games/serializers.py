@@ -1,0 +1,14 @@
+from rest_framework import serializers
+from .models import Game, Developer
+
+
+class GameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Game
+        fields = ['id', 'title', 'developer', 'platform']
+
+class DeveloperSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Developer
+        fields = ['name', 'country']

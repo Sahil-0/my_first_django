@@ -6,6 +6,9 @@ from django.template.defaultfilters import slugify
 class Tags(models.Model):
     label = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.label
+
 class Game(models.Model):
     title = models.CharField(max_length=100)
     developer = models.CharField(max_length=100)
@@ -13,8 +16,25 @@ class Game(models.Model):
     label_tag = models.ManyToManyField(Tags)
     slug = models.SlugField(max_length=150, default='null')
 
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
 class Review(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     review = models.CharField(max_length=1000)
     date = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=150, default='null')
+
+    def __str__(self):
+        return self.review
+
+class Developer(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
